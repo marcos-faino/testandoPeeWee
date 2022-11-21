@@ -1,0 +1,564 @@
+<GerenciaTelas>:
+    TelaInicial:
+    CadastroTurma:
+    ListarTurmas:
+    CadastroAluno:
+    ListarAlunos:
+
+<TelaInicial>:
+    name: 'TelaInicial'
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        canvas:
+            Rectangle:
+                source: 'logo.png'
+                pos: root.pos
+                size: self.size
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 200
+            size_hint_x: .5
+            Label:
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, .7
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                text: "TURMAS"
+                color: [0,0,0,.7]
+                font_size: "18sp"
+            Button:
+                on_release: app.root.tela_cadastro_turma(self)
+                text: 'Cadastrar'
+
+            Button:
+                on_release: app.root.tela_listar_turmas()
+                text: 'Listar Turmas'
+            Label:
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, .7
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                text: "ALUNOS"
+                font_size: "18sp"
+                color: [0,0,0,.7]
+
+            Button:
+                on_release: app.root.tela_cadastro_aluno()
+                text: 'Cadastrar'
+
+            Button:
+                on_release: app.root.tela_listar_alunos()
+                text: 'Listar Alunos'
+
+# termino da telaInicial
+
+#iniciao tela cadastro turma
+<CadastroTurma>:
+    name: 'CadastroTurma'
+
+    #variáveis globais:
+    lbl_id_turma: lblId
+    txi_nome: inputNome
+    chk_matutino: chkMatutino
+    chk_vespertino: chkVespertino
+    chk_noturno: chkNoturno
+    chk_integral: chkIntegral
+    bt_cad_atual: btCadAtual
+
+
+    AnchorLayout:
+        id: interno
+        anchor_x: 'center'
+        anchor_y: 'center'
+        BoxLayout:
+            id: interno1
+            orientation: 'vertical'
+            size_hint: [0.7, 1]
+            canvas:
+                Color:
+                    rgba: .30, .25, .1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                text: 'ID:'
+                size_hint: [1,.25]
+
+            Label:
+                id: lblId
+                color:[0,0,0,.8]
+                size_hint: [1, .15]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, .6
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Label:
+                text: "Nome:"
+                size_hint: [1, .25]
+
+            TextInput:
+                id: inputNome
+                hint_text: 'Informe seu nome'
+                size_hint: [1, .15]
+                multiline: False
+
+            Label:
+                text: 'Turno:'
+                size_hint: [1, .25]
+
+            GridLayout:
+                id: turno
+                cols: 2
+                padding: 10,10
+                spacing: 1, 1
+                row_default_height: '30dp'
+                canvas:
+                    Color:
+                        rgba: .10, .25, .1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Label:
+                    text: 'Matutino'
+                    font_size: '12sp'
+                    valign: 'middle'
+                    size_hint: [1, .25]
+
+                CheckBox:
+                    group: 'turno'
+                    id : chkMatutino
+                    value: "Matutino"
+                    size_hint: [1, .25]
+
+                Label:
+                    text: 'Vespertino'
+                    font_size: '12sp'
+                    valign: 'middle'
+                    size_hint: [1, .25]
+
+                CheckBox:
+                    group: 'turno'
+                    id: chkVespertino
+                    value: "Vespertino"
+                    size_hint: [1, .25]
+
+                Label:
+                    text: 'Noturno'
+                    font_size: '12sp'
+                    valign: 'middle'
+                    size_hint: [1, .25]
+
+                CheckBox:
+                    group: 'turno'
+                    id: chkNoturno
+                    value: "Noturno"
+                    size_hint: [1, .25]
+
+                Label:
+                    text: 'Integral'
+                    font_size: '12sp'
+                    valign: 'middle'
+                    haling: 'left'
+                    size_hint: [1, .25]
+
+                CheckBox:
+                    group: 'turno'
+                    id: chkIntegral
+                    value: "Integral"
+                    size_hint: [1, .25]
+
+            GridLayout:
+                cols: 2
+                size_hint: [1, 0.25]
+                Button:
+                    id: btCadAtual
+                    on_release: app.root.cadastrar_atualizar()
+                    text: 'Cadastrar'
+                    size_hint: [1, 0.25]
+
+                Button:
+                    on_release: app.root.tela_inicial()
+                    text: 'Tela Inicial'
+                    size_hint: [1, 0.25]
+
+<ListarTurmas>:
+    name: 'ListarTurmas'
+
+    #variáveis
+    id_turma: inputId
+    col_id: colId
+    col_nome: colNome
+    col_turno: colTurno
+    lbl_atualizar: lblAtual
+    lbl_excluir: lblExcluir
+    grid_lista: listaTurmas
+
+    BoxLayout:
+        orientation: 'vertical'
+        canvas:
+            Color:
+                rgba: .30, .25, .1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: 'Pesquisar Turmas:'
+            font_size: '18sp'
+            size_hint_y: None
+            height: '50dp'
+
+        GridLayout:
+            cols: 3
+            size_hint_y: None
+            height: '30dp'
+            size_hint_x: .5
+
+            Label:
+                text:'Id'
+
+            TextInput:
+                id: inputId
+                hint_text: 'Id para pesquisa'
+                size_hint: [1, 1]
+                multiline: False
+
+            Button:
+                on_release: app.root.buscar_turmas()
+                text: 'Pesquisar...'
+                size_hint: [1, 1]
+
+        GridLayout:
+            id: listaTurmas
+            cols: 5
+            size_hint_y: None
+            height: '400dp'
+            canvas:
+                Color:
+                    rgba: .80, .69, .58, .6
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                id: colId
+                text: 'Id'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .2
+                color: [0,0,0,1]
+
+            Label:
+                id: colNome
+                text: 'Nome'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .6
+                color: [0,0,0,1]
+
+            Label:
+                id: colTurno
+                text: 'Turno'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .2
+                color: [0,0,0,1]
+            Label:
+                id: lblAtual
+                text: 'Atualizar'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+            Label:
+                id: lblExcluir
+                text: 'Excluir'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+
+
+        AnchorLayout:
+            id: interno
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            Button:
+                on_release: app.root.tela_inicial()
+                text: 'Tela Inicial'
+                size_hint_y: .5
+                size_hint_x: .3
+
+
+<CadastroAluno>:
+    name: "CadastroAluno"
+
+    #variáveis globais
+    lbl_id: lblIdAluno
+    txi_nome: txtNomeAluno
+    txi_nasc: txtNascAluno
+    txi_renda: txtRendaAluno
+    sp_turma: spTurma
+    bt_cad_atual: btCadAtualAluno
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: [0.7, .8]
+            canvas:
+                Color:
+                    rgba: .30, .25, .1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                text: 'ID:'
+                size_hint: [1,.25]
+
+            Label:
+                id: lblIdAluno
+                color:[0,0,0,.8]
+                size_hint: [1, .15]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, .6
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Label:
+                text: "Nome:"
+                size_hint: [1, .25]
+
+            TextInput:
+                id: txtNomeAluno
+                hint_text: 'Nome do aluno'
+                size_hint: [1, .15]
+                multiline: False
+
+            Label:
+                text: 'Data Nascimento:'
+                size_hint: [1, .25]
+            TextInput:
+                id: txtNascAluno
+                hint_text: 'dd/mm/aaaa'
+                size_hint: [1, .15]
+                multiline: False
+
+            Label:
+                text: 'Renda Familiar:'
+                size_hint: [1, .25]
+            TextInput:
+                id: txtRendaAluno
+                hint_text: '9.999,99'
+                size_hint: [1, .15]
+                multiline: False
+
+            Label:
+                text: 'Turma:'
+                size_hint: [1, .25]
+
+            Spinner:
+                id: spTurma
+                text: 'Selecione...'
+                size_hint: [1,.15]
+                height: "15dp"
+                background_color:(0,0,0,.5)
+                color: [1,1,1,1]
+
+            GridLayout:
+                cols: 2
+                size_hint: [1, 0.25]
+                padding : [0,20,0,0]
+
+                Button:
+                    id: btCadAtualAluno
+                    on_release: app.root.cadastrar_atualizar_aluno()
+                    text: 'Cadastrar'
+                    size_hint: [1, 0.25]
+
+                Button:
+                    on_release: app.root.tela_inicial()
+                    text: 'Tela Inicial'
+                    size_hint: [1, 0.25]
+
+
+<listarAlunos>:
+    name: "ListarAlunos"
+
+    #variáveis globais
+    chk_pesq_id: chkPesqId
+    chk_pesq_nome: chkPesqNome
+    txi_pesq_id: txi_pesq_id
+    txi_pesq_nome: txi_pesq_nome
+    gl_pesquisa_id: pesqId
+    gl_pesquisa_nome: pesqNome
+    layout_lista_alunos: listaAlunos
+    pesq: pesquisas
+
+    BoxLayout:
+        id: pesquisas
+        orientation: 'vertical'
+        canvas:
+            Color:
+                rgba: .30, .25, .1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: 'Pesquisar Alunos:'
+            font_size: '18sp'
+            size_hint_y: None
+            height: '50dp'
+
+        GridLayout:
+            canvas.before:
+                Color:
+                    rgba: .80, .69, .58, .6
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            cols: 4
+            Label:
+                text: "Pesquisar por Id"
+                color: [0,0,0,.8]
+            CheckBox:
+                group: "tipoPesq"
+                id: chkPesqId
+                value: "id"
+                size_hint: [1, .25]
+                active: True
+                on_active: app.root._tela_aluno.alternar_pesq(self.value)
+
+            Label:
+                text: "Pesquisar por Nome"
+                color: [0,0,0,.8]
+            CheckBox:
+                group: "tipoPesq"
+                id: chkPesqNome
+                value: "nome"
+                size_hint: [1, .25]
+                on_active: app.root._tela_aluno.alternar_pesq(self.value)
+
+        GridLayout:
+            id: pesqId
+            cols: 3
+            size_hint_y: None
+            height: '30dp'
+            size_hint_x: .7
+            Label:
+                text:'Id'
+            TextInput:
+                id: txi_pesq_id
+                hint_text: 'Id para pesquisa'
+                size_hint: [1, 1]
+                multiline: False
+            Button:
+                on_release: app.root.buscar_alunos()
+                text: 'Pesquisar...'
+                size_hint: [1, 1]
+
+        GridLayout:
+            id: pesqNome
+            cols: 3
+            size_hint_y: None
+            height: '30dp'
+            size_hint_x: .7
+            Label:
+                text:'Nome'
+            TextInput:
+                id: txi_pesq_nome
+                hint_text: 'Nome para pesquisa'
+                size_hint: [1, 1]
+                multiline: False
+            Button:
+                on_release: app.root.buscar_alunos_nome(txi_pesq_nome.text)
+                text: 'Pesquisar...'
+                size_hint: [1, 1]
+
+        GridLayout:
+            id: listaAlunos
+            cols: 7
+            size_hint_y: None
+            height: '400dp'
+            canvas:
+                Color:
+                    rgba: .80, .69, .58, .6
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                id: col_id
+                text: 'Id'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+
+            Label:
+                id: col_nome
+                text: 'Nome'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .4
+                color: [0,0,0,1]
+            Label:
+                id: col_dt_nasc
+                text: 'Data Nasc'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+            Label:
+                id: col_renda
+                text: 'Renda Fam.'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+
+            Label:
+                id: col_turma
+                text: 'Turma'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+            Label:
+                id: lbl_atual
+                text: 'Atualizar'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+            Label:
+                id: lbl_excluir
+                text: 'Excluir'
+                size_hint_y: None
+                height: '30dp'
+                size_hint_x: .1
+                color: [0,0,0,1]
+
+
+        AnchorLayout:
+            id: interno
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            Button:
+                on_release: app.root.tela_inicial()
+                text: 'Tela Inicial'
+                size_hint_y: .5
+                size_hint_x: .3
