@@ -1,6 +1,6 @@
 import kivy
 from kivy.app import App
-from view.gerencTelas import GerenciaTelas
+from gerencTelas import GerenciaTelas
 
 kivy.require('2.0.0')
 

@@ -1,8 +1,8 @@
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty
 from kivy.uix.screenmanager import Screen, ScreenManager
 
-from view.telaAluno import ViewAluno
-from view.telaTurma import ViewTurma
+from telaAluno import ViewAluno
+from telaTurma import ViewTurma
 
 
 class TelaInicial(Screen):

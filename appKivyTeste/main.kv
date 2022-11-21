@@ -1,0 +1,61 @@
+# .kv file implementation of the code
+<Tela1>:
+    title: 'App Soma'
+    auto_dismiss: False
+    id: 'tela1'
+
+    # Este layout permite que você defina coordenadas
+    # relativas para seus filhos.
+    RelativeLayout:
+        orientation: 'vertical'
+        pos: self.pos
+        size: root.size
+        id: 'layout1'
+        canvas:
+            Color:
+                rgba: 0, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            id: lblText1
+            text: 'Valor 1:'
+            pos_hint: {'x': 0.02, 'y': 0.900}
+            size_hint: 0.15, 0.03
+            color: [0,0,1,1]
+
+        Label:
+            id: lblText2
+            text: 'Valor 2:'
+            pos_hint: {'x': 0.02, 'y': 0.850}
+            size_hint: 0.15, 0.03
+            color: [0,0,1,1]
+
+        TextInput:
+            id: input1
+            hint_text: 'Valor 1'
+            pos_hint: {'x': 0.20, 'y': 0.900}
+            size_hint: 0.75, 0.05
+            multiline: False
+
+        TextInput:
+            id: input2
+            hint_text: 'Valor 2'
+            pos_hint: {'x': 0.20, 'y': 0.850}
+            size_hint: 0.75, 0.05
+            multiline: False
+
+        Button:
+            text: 'Somar'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.750}
+            size_hint: 0.15, 0.05
+            on_press: app.somar()
+
+        Label:
+            id: result
+            pos_hint: {'center_x': 0.5, 'y': 0.580}
+            size_hint: 0.65, 0.08
+            font_size: '24sp'
+            halign: 'center'
+            color: [0,0,0,1]
