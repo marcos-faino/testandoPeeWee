@@ -110,5 +110,11 @@ class ViewTurma:
                 self._telalistar.grid_lista.add_widget(res['lblTurno'])
                 self._telalistar.grid_lista.add_widget(res['btAtualizar'])
                 self._telalistar.grid_lista.add_widget(res['btExcluir'])
+                self.criarRelatorio(resultado)
         except Exception as e:
             print(e)
+
+    def criarRelatorio(self, lista):
+        ctrl = TurmaCtrl()
+        mens = ctrl.geraRelatorioTurmas(lista)
+        self._popJanela(mens)

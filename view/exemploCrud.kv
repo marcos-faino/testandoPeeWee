@@ -292,12 +292,20 @@
             id: interno
             anchor_x: 'center'
             anchor_y: 'center'
+            GridLayout:
+                cols: 2
 
-            Button:
-                on_release: app.root.tela_inicial()
-                text: 'Tela Inicial'
-                size_hint_y: .5
-                size_hint_x: .3
+                Button:
+                    on_release: app.root.tela_inicial()
+                    text: 'Tela Inicial'
+                    size_hint_y: .5
+                    size_hint_x: .3
+
+                Button:
+                    on_release: app.root._tela_turma.criarRelatorio()
+                    text: 'Gerar PDF'
+                    size_hint_y: .5
+                    size_hint_x: .3
 
 
 <CadastroAluno>:

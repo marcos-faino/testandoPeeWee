@@ -1,10 +1,14 @@
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 
+from controller.utils import Util
 from model.models import Turma
 
 
 class TurmaCtrl:
+
+    def __init__(self):
+        self._lista = []
 
     def salvar_atualizar_turma(self, nome, turno, id=None):
         try:
@@ -29,30 +33,30 @@ class TurmaCtrl:
             return "Não foi possível excluir a turma!!!"
 
     def buscar_por_id(self, id):
-        lista = []
+        self._lista = []
         try:
             turma = Turma.get_by_id(id)
-            lista.append(self._montar_turma(turma.id, turma.nome, turma.turno))
-            return lista
+            self._lista.append(self._montar_turma(turma.id, turma.nome, turma.turno))
+            return self._lista
         except Exception as e:
             return None
 
     def buscar_por_nome(self, nome):
-        lista = []
+        self._lista = []
         try:
             turma = Turma.get(nome=nome)
-            lista.append(self._montar_turma(turma.id, turma.nome, turma.turno))
-            return lista
+            self._lista.append(self._montar_turma(turma.id, turma.nome, turma.turno))
+            return self._lista
         except Exception as e:
             return None
 
     def buscar_todas(self):
         try:
             ts = Turma.select()
-            lista = []
+            # self._lista = []
             for t in ts:
-                lista.append(self._montar_turma(t.id, t.nome, t.turno))
-            return lista
+                self._lista.append(self._montar_turma(t.id, t.nome, t.turno))
+            return self._lista
         except Exception as e:
             return None
 
@@ -81,3 +85,14 @@ class TurmaCtrl:
                        height='30dp',
                        size_hint_x = .1)
         return botao
+
+    def geraRelatorioTurmas(self, lista):
+        turmas = []
+        for t in lista:
+            turmas.append({'id': t['lblId'].text,
+                           'nome': t['lblNome'].text,
+                           'turno': t['lblTurno'].text})
+        if Util.gerarRelatorioPdf(turmas,'Turmas 2022'):
+            return "Relatório gerado com sucesso!"
+        else:
+            return "Não foi possível gerar o relatório!"
