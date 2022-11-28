@@ -86,13 +86,18 @@ class TurmaCtrl:
                        size_hint_x = .1)
         return botao
 
-    def geraRelatorioTurmas(self, lista):
-        turmas = []
-        for t in lista:
-            turmas.append({'id': t['lblId'].text,
-                           'nome': t['lblNome'].text,
-                           'turno': t['lblTurno'].text})
-        if Util.gerarRelatorioPdf(turmas,'Turmas 2022'):
+    def geraRelatorioTurmas(self, id=None):
+        lista = []
+        if id:
+            turmas = self.buscar_por_id(id)
+        else:
+            turmas = self.buscar_todas()
+
+        for t in turmas:
+            lista.append({"Id": t['lblId'].text,
+                          "Nome": t['lblNome'].text,
+                          "Turno": t['lblTurno'].text})
+        if Util.gerarRelatorioPdf(lista,'Turmas 2022'):
             return "Relatório gerado com sucesso!"
         else:
             return "Não foi possível gerar o relatório!"

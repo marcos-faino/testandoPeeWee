@@ -35,13 +35,13 @@ class Util:
                 lin = 250
                 for c in dados[0]:
                     cnv.drawString(Util.tomm(col), Util.tomm(lin), str(c).upper())
-                    col += 35
+                    col += 40
                 lin -= 5
                 for d in dados:
                     col = 10
                     for v in d:
                         cnv.drawString(Util.tomm(col), Util.tomm(lin), str(d[v]))
-                        col += 35
+                        col += 40
 
                     lin -= 5
 

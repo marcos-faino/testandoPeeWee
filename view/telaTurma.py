@@ -81,7 +81,6 @@ class ViewTurma:
             self._telacad.chk_integral.active = True
 
     def _limpar_tela_listar(self):
-        self._telalistar.id_turma.text = ""
         cabecalho = [
             self._telalistar.col_id,
             self._telalistar.col_nome,
@@ -110,11 +109,13 @@ class ViewTurma:
                 self._telalistar.grid_lista.add_widget(res['lblTurno'])
                 self._telalistar.grid_lista.add_widget(res['btAtualizar'])
                 self._telalistar.grid_lista.add_widget(res['btExcluir'])
-                self.criarRelatorio(resultado)
         except Exception as e:
             print(e)
 
-    def criarRelatorio(self, lista):
+    def criarRelatorio(self):
         ctrl = TurmaCtrl()
-        mens = ctrl.geraRelatorioTurmas(lista)
+        if self._telalistar.id_turma.text != '':
+            mens = ctrl.geraRelatorioTurmas(self._telalistar.id_turma.text)
+        else:
+            mens = ctrl.geraRelatorioTurmas()
         self._popJanela(mens)
